@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、前言 朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用Py">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习 朴素贝叶斯算法实战(理论+详细的python3代码实现)">
+<meta property="og:url" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/index.html">
+<meta property="og:site_name" content="Mochen">
+<meta property="og:description" content="一、前言 朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用Py">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/8.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/9.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/10.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/11.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/12.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/13.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/14.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/15.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/16.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/17.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/18.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/19.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/20.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/21.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/22.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/23.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/24.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/25.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/26.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/27.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/28.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/29.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/30.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/31.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/32.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/33.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/34.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/35.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/36.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/37.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/38.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/39.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/40.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/41.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/42.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/43.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/44.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/45.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/46.png">
+<meta property="og:updated_time" content="2018-12-25T16:19:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习 朴素贝叶斯算法实战(理论+详细的python3代码实现)">
+<meta name="twitter:description" content="一、前言 朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用Py">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/">
+
+
+
+
+
+  <title>机器学习 朴素贝叶斯算法实战(理论+详细的python3代码实现) | Mochen</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/yaoguangju"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mochen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫晨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mochen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习 朴素贝叶斯算法实战(理论+详细的python3代码实现)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-26T00:18:36+08:00">
+                2018-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/" class="leancloud_visitors" data-flag-title="机器学习 朴素贝叶斯算法实战(理论+详细的python3代码实现)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 </span>℃
+             
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  12.6k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  50 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><hr>
+<p>朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。</p>
+<p>本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用Python3编程实现一个简单的言论过滤器，新浪微博分类，垃圾邮件分类等等</p>
+<p>本文出现的所有代码，均可在我的github上下载，欢迎Follow、Star：<a href="https://github.com/yaoguangju/machine_learning" target="_blank" rel="noopener">Github地址</a></p>
+<h2 id="二、朴素贝叶斯理论"><a href="#二、朴素贝叶斯理论" class="headerlink" title="二、朴素贝叶斯理论"></a>二、朴素贝叶斯理论</h2><hr>
+<p>朴素贝叶斯是贝叶斯决策理论的一部分，所以在讲述朴素贝叶斯之前有必要快速了解一下贝叶斯决策理论。</p>
+<h4 id="1、贝叶斯决策理论"><a href="#1、贝叶斯决策理论" class="headerlink" title="1、贝叶斯决策理论"></a>1、贝叶斯决策理论</h4><p>假设现在我们有一个数据集，它由两类数据组成，数据分布如下图所示：</p>
+<p><img src="img/1.png" alt=""></p>
+<p>我们现在用p1(x,y)表示数据点(x,y)属于类别1(图中红色圆点表示的类别)的概率，用p2(x,y)表示数据点(x,y)属于类别2(图中蓝色三角形表示的类别)的概率，那么对于一个新数据点(x,y)，可以用下面的规则来判断它的类别：</p>
+<ul>
+<li>如果p1(x,y)&gt; p2(x,y)，那么类别为1</li>
+<li>如果p1(x,y)&lt; p2(x,y)，那么类别为2</li>
+</ul>
+<p>也就是说，我们会选择高概率对应的类别。这就是贝叶斯决策理论的核心思想，即选择具有最高概率的决策。已经了解了贝叶斯决策理论的核心思想，那么接下来，就是学习如何计算p1和p2概率。</p>
+<h4 id="2、条件概率"><a href="#2、条件概率" class="headerlink" title="2、条件概率"></a>2、条件概率</h4><p>在学习计算p1 和p2概率之前，我们需要了解什么是条件概率(Condittional probability)，就是指在事件B发生的情况下，事件A发生的概率，用P(A|B)来表示。</p>
+<p><img src="img/2.png" alt=""></p>
+<p>根据文氏图，可以很清楚地看到在事件B发生的情况下，事件A发生的概率就是P(A∩B)除以P(B)。</p>
+<p><img src="img/3.png" alt=""></p>
+<p>因此，</p>
+<p><img src="img/4.png" alt=""></p>
+<p>同理可得，</p>
+<p><img src="img/5.png" alt=""></p>
+<p>所以，</p>
+<p><img src="img/6.png" alt=""></p>
+<p>即</p>
+<p><img src="img/7.png" alt=""></p>
+<p>这就是条件概率的计算公式。</p>
+<h4 id="3、全概率公式"><a href="#3、全概率公式" class="headerlink" title="3、全概率公式"></a>3、全概率公式</h4><p>除了条件概率以外，在计算p1和p2的时候，还要用到全概率公式，因此，这里继续推导全概率公式。</p>
+<p>假定样本空间S，是两个事件A与A’的和。</p>
+<p><img src="img/8.png" alt=""></p>
+<p>上图中，红色部分是事件A，绿色部分是事件A’，它们共同构成了样本空间S。</p>
+<p>在这种情况下，事件B可以划分成两个部分。</p>
+<p><img src="img/9.png" alt=""></p>
+<p>即</p>
+<p><img src="img/10.png" alt=""></p>
+<p>在上一节的推导当中，我们已知</p>
+<p><img src="img/11.png" alt=""></p>
+<p>所以，</p>
+<p><img src="img/12.png" alt=""></p>
+<p>这就是全概率公式。它的含义是，如果A和A’构成样本空间的一个划分，那么事件B的概率，就等于A和A’的概率分别乘以B对这两个事件的条件概率之和。</p>
+<p>将这个公式代入上一节的条件概率公式，就得到了条件概率的另一种写法：</p>
+<p><img src="img/13.png" alt=""></p>
+<h4 id="4、贝叶斯推断"><a href="#4、贝叶斯推断" class="headerlink" title="4、贝叶斯推断"></a>4、贝叶斯推断</h4><p>对条件概率公式进行变形，可以得到如下形式：</p>
+<p><img src="img/14.png" alt=""></p>
+<p>我们把P(A)称为”先验概率”（Prior probability），即在B事件发生之前，我们对A事件概率的一个判断。</p>
+<p>P(A|B)称为”后验概率”（Posterior probability），即在B事件发生之后，我们对A事件概率的重新评估。</p>
+<p>P(B|A)/P(B)称为”可能性函数”（Likelyhood），这是一个调整因子，使得预估概率更接近真实概率。</p>
+<p>所以，条件概率可以理解成下面的式子：</p>
+<center><strong>后验概率　＝　先验概率 ｘ 调整因子</strong></center>
+
+<p>这就是贝叶斯推断的含义。我们先预估一个”先验概率”，然后加入实验结果，看这个实验到底是增强还是削弱了”先验概率”，由此得到更接近事实的”后验概率”。</p>
+<p>在这里，如果”可能性函数”P(B|A)/P(B)&gt;1，意味着”先验概率”被增强，事件A的发生的可能性变大；如果”可能性函数”=1，意味着B事件无助于判断事件A的可能性；如果”可能性函数”&lt;1，意味着”先验概率”被削弱，事件A的可能性变小。</p>
+<p>为了加深对贝叶斯推断的理解，我们举一个例子。</p>
+<p><img src="img/15.png" alt=""></p>
+<p>两个一模一样的碗，一号碗有30颗水果糖和10颗巧克力糖，二号碗有水果糖和巧克力糖各20颗。现在随机选择一个碗，从中摸出一颗糖，发现是水果糖。请问这颗水果糖来自一号碗的概率有多大？</p>
+<p>我们假定，H1表示一号碗，H2表示二号碗。由于这两个碗是一样的，所以P(H1)=P(H2)，也就是说，在取出水果糖之前，这两个碗被选中的概率相同。因此，P(H1)=0.5，我们把这个概率就叫做”先验概率”，即没有做实验之前，来自一号碗的概率是0.5。</p>
+<p>再假定，E表示水果糖，所以问题就变成了在已知E的情况下，来自一号碗的概率有多大，即求P(H1|E)。我们把这个概率叫做”后验概率”，即在E事件发生之后，对P(H1)的修正。</p>
+<p>根据条件概率公式，得到</p>
+<p><img src="img/16.png" alt=""></p>
+<p>已知，P(H1)等于0.5，P(E|H1)为一号碗中取出水果糖的概率，等于30÷(30+10)=0.75，那么求出P(E)就可以得到答案。根据全概率公式，</p>
+<p><img src="img/17.png" alt=""></p>
+<p>所以，</p>
+<p><img src="img/18.png" alt=""></p>
+<p>将数字代入原方程，得到</p>
+<p><img src="img/19.png" alt=""></p>
+<p>这表明，来自一号碗的概率是0.6。也就是说，取出水果糖之后，H1事件的可能性得到了增强。</p>
+<p>同时再思考一个问题，在使用该算法的时候，如果不需要知道具体的类别概率，即上面P(H1|E)=0.6，只需要知道所属类别，即来自一号碗，我们有必要计算P(E)这个全概率吗？要知道我们只需要比较 P(H1|E)和P(H2|E)的大小，找到那个最大的概率就可以。既然如此，两者的分母都是相同的，那我们只需要比较分子即可。即比较P(E|H1)P(H1)和P(E|H2)P(H2)的大小，所以为了减少计算量，全概率公式在实际编程中可以不使用。</p>
+<h4 id="5、朴素贝叶斯推断"><a href="#5、朴素贝叶斯推断" class="headerlink" title="5、朴素贝叶斯推断"></a>5、朴素贝叶斯推断</h4><p>理解了贝叶斯推断，那么让我们继续看看朴素贝叶斯。贝叶斯和朴素贝叶斯的概念是不同的，区别就在于“朴素”二字，朴素贝叶斯对条件个概率分布做了条件独立性的假设。 比如下面的公式，假设有n个特征：</p>
+<p><img src="img/20.png" alt=""></p>
+<p>由于每个特征都是独立的，我们可以进一步拆分公式 ：</p>
+<p><img src="img/21.png" alt=""></p>
+<p>这样我们就可以进行计算了。如果有些迷糊，让我们从一个例子开始讲起，你会看到贝叶斯分类器很好懂，一点都不难。</p>
+<p>某个医院早上来了六个门诊的病人，他们的情况如下表所示：</p>
+<p><img src="img/22.png" alt=""></p>
+<p>现在又来了第七个病人，是一个打喷嚏的建筑工人。请问他患上感冒的概率有多大？</p>
+<p>根据贝叶斯定理：</p>
+<p><img src="img/23.png" alt=""></p>
+<p>可得：</p>
+<p><img src="img/24.png" alt=""></p>
+<p>根据朴素贝叶斯条件独立性的假设可知，”打喷嚏”和”建筑工人”这两个特征是独立的，因此，上面的等式就变成了</p>
+<p><img src="img/25.png" alt=""></p>
+<p>这里可以计算：</p>
+<p><img src="img/26.png" alt=""></p>
+<p>因此，这个打喷嚏的建筑工人，有66%的概率是得了感冒。同理，可以计算这个病人患上过敏或脑震荡的概率。比较这几个概率，就可以知道他最可能得什么病。</p>
+<p>这就是贝叶斯分类器的基本方法：在统计资料的基础上，依据某些特征，计算各个类别的概率，从而实现分类。</p>
+<p>同样，在编程的时候，如果不需要求出所属类别的具体概率，P(打喷嚏) = 0.5和P(建筑工人) = 0.33的概率是可以不用求的。</p>
+<h2 id="三、实战项目：简单言论过滤器"><a href="#三、实战项目：简单言论过滤器" class="headerlink" title="三、实战项目：简单言论过滤器"></a>三、实战项目：简单言论过滤器</h2><hr>
+<p>以在线社区留言为例。为了不影响社区的发展，我们要屏蔽侮辱性的言论，所以要构建一个快速过滤器，如果某条留言使用了负面或者侮辱性的语言，那么就将该留言标志为内容不当。过滤这类内容是一个很常见的需求。对此问题建立两个类型：侮辱类和非侮辱类，使用1和0分别表示。</p>
+<p>我们把文本看成单词向量或者词条向量，也就是说将句子转换为向量。考虑出现所有文档中的单词，再决定将哪些单词纳入词汇表或者说所要的词汇集合，然后必须要将每一篇文档转换为词汇表上的向量。简单起见，我们先假设已经将本文切分完毕，存放到列表中，并对词汇向量进行分类标注。编写代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:创建实验样本</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    无</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    postingList - 实验样本切分的词条</span></span><br><span class="line"><span class="string">    classVec - 类别标签向量</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></span><br><span class="line">	postingList = [[<span class="string">'my'</span>, <span class="string">'dog'</span>, <span class="string">'has'</span>, <span class="string">'flea'</span>, <span class="string">'problems'</span>, <span class="string">'help'</span>, <span class="string">'please'</span>],  <span class="comment"># 切分的词条</span></span><br><span class="line">				   [<span class="string">'maybe'</span>, <span class="string">'not'</span>, <span class="string">'take'</span>, <span class="string">'him'</span>, <span class="string">'to'</span>, <span class="string">'dog'</span>, <span class="string">'park'</span>, <span class="string">'stupid'</span>],</span><br><span class="line">				   [<span class="string">'my'</span>, <span class="string">'dalmation'</span>, <span class="string">'is'</span>, <span class="string">'so'</span>, <span class="string">'cute'</span>, <span class="string">'I'</span>, <span class="string">'love'</span>, <span class="string">'him'</span>],</span><br><span class="line">				   [<span class="string">'stop'</span>, <span class="string">'posting'</span>, <span class="string">'stupid'</span>, <span class="string">'worthless'</span>, <span class="string">'garbage'</span>],</span><br><span class="line">				   [<span class="string">'mr'</span>, <span class="string">'licks'</span>, <span class="string">'ate'</span>, <span class="string">'my'</span>, <span class="string">'steak'</span>, <span class="string">'how'</span>, <span class="string">'to'</span>, <span class="string">'stop'</span>, <span class="string">'him'</span>],</span><br><span class="line">				   [<span class="string">'quit'</span>, <span class="string">'buying'</span>, <span class="string">'worthless'</span>, <span class="string">'dog'</span>, <span class="string">'food'</span>, <span class="string">'stupid'</span>]]</span><br><span class="line">	classVec = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]  <span class="comment"># 类别标签向量，1代表侮辱性词汇，0代表不是</span></span><br><span class="line">	<span class="keyword">return</span> postingList, classVec</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	postingLIst, classVec = loadDataSet()</span><br><span class="line">	<span class="keyword">for</span> each <span class="keyword">in</span> postingLIst:</span><br><span class="line">		print(each)</span><br><span class="line">	print(classVec)</span><br></pre></td></tr></table></figure>
+<p>从运行结果可以看出，我们已经将postingList是存放词条列表中，classVec是存放每个词条的所属类别，1代表侮辱类 ，0代表非侮辱类。</p>
+<p><img src="img/27.png" alt=""></p>
+<p>继续编写代码，前面我们已经说过我们要先创建一个词汇表，并将切分好的词条转换为词条向量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:创建实验样本</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    无</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    postingList - 实验样本切分的词条</span></span><br><span class="line"><span class="string">    classVec - 类别标签向量</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></span><br><span class="line">    postingList=[[<span class="string">'my'</span>, <span class="string">'dog'</span>, <span class="string">'has'</span>, <span class="string">'flea'</span>, <span class="string">'problems'</span>, <span class="string">'help'</span>, <span class="string">'please'</span>],                <span class="comment">#切分的词条</span></span><br><span class="line">                 [<span class="string">'maybe'</span>, <span class="string">'not'</span>, <span class="string">'take'</span>, <span class="string">'him'</span>, <span class="string">'to'</span>, <span class="string">'dog'</span>, <span class="string">'park'</span>, <span class="string">'stupid'</span>],</span><br><span class="line">                 [<span class="string">'my'</span>, <span class="string">'dalmation'</span>, <span class="string">'is'</span>, <span class="string">'so'</span>, <span class="string">'cute'</span>, <span class="string">'I'</span>, <span class="string">'love'</span>, <span class="string">'him'</span>],</span><br><span class="line">                 [<span class="string">'stop'</span>, <span class="string">'posting'</span>, <span class="string">'stupid'</span>, <span class="string">'worthless'</span>, <span class="string">'garbage'</span>],</span><br><span class="line">                 [<span class="string">'mr'</span>, <span class="string">'licks'</span>, <span class="string">'ate'</span>, <span class="string">'my'</span>, <span class="string">'steak'</span>, <span class="string">'how'</span>, <span class="string">'to'</span>, <span class="string">'stop'</span>, <span class="string">'him'</span>],</span><br><span class="line">                 [<span class="string">'quit'</span>, <span class="string">'buying'</span>, <span class="string">'worthless'</span>, <span class="string">'dog'</span>, <span class="string">'food'</span>, <span class="string">'stupid'</span>]]</span><br><span class="line">    classVec = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>]                                                                   <span class="comment">#类别标签向量，1代表侮辱性词汇，0代表不是</span></span><br><span class="line">    <span class="keyword">return</span> postingList,classVec</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:根据vocabList词汇表，将inputSet向量化，向量的每个元素为1或0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    vocabList - createVocabList返回的列表</span></span><br><span class="line"><span class="string">    inputSet - 切分的词条列表</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    returnVec - 文档向量,词集模型</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setOfWords2Vec</span><span class="params">(vocabList, inputSet)</span>:</span></span><br><span class="line">    returnVec = [<span class="number">0</span>] * len(vocabList)                                    <span class="comment">#创建一个其中所含元素都为0的向量</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:                                                <span class="comment">#遍历每个词条</span></span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:                                            <span class="comment">#如果词条存在于词汇表中，则置1</span></span><br><span class="line">            returnVec[vocabList.index(word)] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>: print(<span class="string">"the word: %s is not in my Vocabulary!"</span> % word)</span><br><span class="line">    <span class="keyword">return</span> returnVec                                                    <span class="comment">#返回文档向量</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:将切分的实验样本词条整理成不重复的词条列表，也就是词汇表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    dataSet - 整理的样本数据集</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    vocabSet - 返回不重复的词条列表，也就是词汇表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createVocabList</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">    vocabSet = set([])                      <span class="comment">#创建一个空的不重复列表</span></span><br><span class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> dataSet:</span><br><span class="line">        vocabSet = vocabSet | set(document) <span class="comment">#取并集</span></span><br><span class="line">    <span class="keyword">return</span> list(vocabSet)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    postingList, classVec = loadDataSet()</span><br><span class="line">    print(<span class="string">'postingList:\n'</span>,postingList)</span><br><span class="line">    myVocabList = createVocabList(postingList)</span><br><span class="line">    print(<span class="string">'myVocabList:\n'</span>,myVocabList)</span><br><span class="line">    trainMat = []</span><br><span class="line">    <span class="keyword">for</span> postinDoc <span class="keyword">in</span> postingList:</span><br><span class="line">        trainMat.append(setOfWords2Vec(myVocabList, postinDoc))</span><br><span class="line">    print(<span class="string">'trainMat:\n'</span>, trainMat)</span><br></pre></td></tr></table></figure>
+<p>从运行结果可以看出，postingList是原始的词条列表，myVocabList是词汇表。myVocabList是所有单词出现的集合，没有重复的元素。词汇表是用来干什么的？没错，它是用来将词条向量化的，一个单词在词汇表中出现过一次，那么就在相应位置记作1，如果没有出现就在相应位置记作0。trainMat是所有的词条向量组成的列表。它里面存放的是根据myVocabList向量化的词条向量。</p>
+<p><img src="img/28.png" alt=""></p>
+<p>我们已经得到了词条向量。接下来，我们就可以通过词条向量训练朴素贝叶斯分类器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:创建实验样本</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    无</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    postingList - 实验样本切分的词条</span></span><br><span class="line"><span class="string">    classVec - 类别标签向量</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></span><br><span class="line">    postingList=[[<span class="string">'my'</span>, <span class="string">'dog'</span>, <span class="string">'has'</span>, <span class="string">'flea'</span>, <span class="string">'problems'</span>, <span class="string">'help'</span>, <span class="string">'please'</span>],                <span class="comment">#切分的词条</span></span><br><span class="line">                 [<span class="string">'maybe'</span>, <span class="string">'not'</span>, <span class="string">'take'</span>, <span class="string">'him'</span>, <span class="string">'to'</span>, <span class="string">'dog'</span>, <span class="string">'park'</span>, <span class="string">'stupid'</span>],</span><br><span class="line">                 [<span class="string">'my'</span>, <span class="string">'dalmation'</span>, <span class="string">'is'</span>, <span class="string">'so'</span>, <span class="string">'cute'</span>, <span class="string">'I'</span>, <span class="string">'love'</span>, <span class="string">'him'</span>],</span><br><span class="line">                 [<span class="string">'stop'</span>, <span class="string">'posting'</span>, <span class="string">'stupid'</span>, <span class="string">'worthless'</span>, <span class="string">'garbage'</span>],</span><br><span class="line">                 [<span class="string">'mr'</span>, <span class="string">'licks'</span>, <span class="string">'ate'</span>, <span class="string">'my'</span>, <span class="string">'steak'</span>, <span class="string">'how'</span>, <span class="string">'to'</span>, <span class="string">'stop'</span>, <span class="string">'him'</span>],</span><br><span class="line">                 [<span class="string">'quit'</span>, <span class="string">'buying'</span>, <span class="string">'worthless'</span>, <span class="string">'dog'</span>, <span class="string">'food'</span>, <span class="string">'stupid'</span>]]</span><br><span class="line">    classVec = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>]                                                                   <span class="comment">#类别标签向量，1代表侮辱性词汇，0代表不是</span></span><br><span class="line">    <span class="keyword">return</span> postingList,classVec</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:根据vocabList词汇表，将inputSet向量化，向量的每个元素为1或0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    vocabList - createVocabList返回的列表</span></span><br><span class="line"><span class="string">    inputSet - 切分的词条列表</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    returnVec - 文档向量,词集模型</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setOfWords2Vec</span><span class="params">(vocabList, inputSet)</span>:</span></span><br><span class="line">    returnVec = [<span class="number">0</span>] * len(vocabList)                                    <span class="comment">#创建一个其中所含元素都为0的向量</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:                                                <span class="comment">#遍历每个词条</span></span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:                                            <span class="comment">#如果词条存在于词汇表中，则置1</span></span><br><span class="line">            returnVec[vocabList.index(word)] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>: print(<span class="string">"the word: %s is not in my Vocabulary!"</span> % word)</span><br><span class="line">    <span class="keyword">return</span> returnVec                                                    <span class="comment">#返回文档向量</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:将切分的实验样本词条整理成不重复的词条列表，也就是词汇表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    dataSet - 整理的样本数据集</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    vocabSet - 返回不重复的词条列表，也就是词汇表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createVocabList</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">    vocabSet = set([])                      <span class="comment">#创建一个空的不重复列表</span></span><br><span class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> dataSet:</span><br><span class="line">        vocabSet = vocabSet | set(document) <span class="comment">#取并集</span></span><br><span class="line">    <span class="keyword">return</span> list(vocabSet)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:朴素贝叶斯分类器训练函数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    trainMatrix - 训练文档矩阵，即setOfWords2Vec返回的returnVec构成的矩阵</span></span><br><span class="line"><span class="string">    trainCategory - 训练类别标签向量，即loadDataSet返回的classVec</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    p0Vect - 非侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">    p1Vect - 侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">    pAbusive - 文档属于侮辱类的概率</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainNB0</span><span class="params">(trainMatrix,trainCategory)</span>:</span></span><br><span class="line">    numTrainDocs = len(trainMatrix)                            <span class="comment">#计算训练的文档数目</span></span><br><span class="line">    numWords = len(trainMatrix[<span class="number">0</span>])                            <span class="comment">#计算每篇文档的词条数</span></span><br><span class="line">    pAbusive = sum(trainCategory)/float(numTrainDocs)        <span class="comment">#文档属于侮辱类的概率</span></span><br><span class="line">    p0Num = np.zeros(numWords); p1Num = np.zeros(numWords)    <span class="comment">#创建numpy.zeros数组,词条出现数初始化为0</span></span><br><span class="line">    p0Denom = <span class="number">0.0</span>; p1Denom = <span class="number">0.0</span>                            <span class="comment">#分母初始化为0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numTrainDocs):</span><br><span class="line">        <span class="keyword">if</span> trainCategory[i] == <span class="number">1</span>:                            <span class="comment">#统计属于侮辱类的条件概率所需的数据，即P(w0|1),P(w1|1),P(w2|1)···</span></span><br><span class="line">            p1Num += trainMatrix[i]</span><br><span class="line">            p1Denom += sum(trainMatrix[i])</span><br><span class="line">        <span class="keyword">else</span>:                                                <span class="comment">#统计属于非侮辱类的条件概率所需的数据，即P(w0|0),P(w1|0),P(w2|0)···</span></span><br><span class="line">            p0Num += trainMatrix[i]</span><br><span class="line">            p0Denom += sum(trainMatrix[i])</span><br><span class="line">    p1Vect = p1Num/p1Denom</span><br><span class="line">    p0Vect = p0Num/p0Denom</span><br><span class="line">    <span class="keyword">return</span> p0Vect,p1Vect,pAbusive                            <span class="comment">#返回属于侮辱类的条件概率数组，属于非侮辱类的条件概率数组，文档属于侮辱类的概率</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    postingList, classVec = loadDataSet()</span><br><span class="line">    myVocabList = createVocabList(postingList)</span><br><span class="line">    print(<span class="string">'myVocabList:\n'</span>, myVocabList)</span><br><span class="line">    trainMat = []</span><br><span class="line">    <span class="keyword">for</span> postinDoc <span class="keyword">in</span> postingList:</span><br><span class="line">        trainMat.append(setOfWords2Vec(myVocabList, postinDoc))</span><br><span class="line">    p0V, p1V, pAb = trainNB0(trainMat, classVec)</span><br><span class="line">    print(<span class="string">'p0V:\n'</span>, p0V)</span><br><span class="line">    print(<span class="string">'p1V:\n'</span>, p1V)</span><br><span class="line">    print(<span class="string">'classVec:\n'</span>, classVec)</span><br><span class="line">    print(<span class="string">'pAb:\n'</span>, pAb)</span><br></pre></td></tr></table></figure>
+<p>运行结果如下，p0V存放的是每个单词属于类别0，也就是非侮辱类词汇的概率。比如p0V的倒数第6个概率，就是stupid这个单词属于非侮辱类的概率为0。同理，p1V的倒数第6个概率，就是stupid这个单词属于侮辱类的概率为0.15789474，也就是约等于15.79%的概率。我们知道stupid的中文意思是蠢货，难听点的叫法就是傻逼。显而易见，这个单词属于侮辱类。pAb是所有侮辱类的样本占所有样本的概率，从classVec中可以看出，一用有3个侮辱类，3个非侮辱类。所以侮辱类的概率是0.5。因此p0V存放的就是P(him|非侮辱类) = 0.0833、P(is|非侮辱类) = 0.0417，一直到P(dog|非侮辱类) = 0.0417，这些单词的条件概率。同理，p1V存放的就是各个单词属于侮辱类的条件概率。pAb就是先验概率。</p>
+<p><img src="img/29.png" alt=""></p>
+<p>已经训练好分类器，接下来，使用分类器进行分类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:创建实验样本</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	无</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	postingList - 实验样本切分的词条</span></span><br><span class="line"><span class="string">	classVec - 类别标签向量</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></span><br><span class="line">	postingList=[[<span class="string">'my'</span>, <span class="string">'dog'</span>, <span class="string">'has'</span>, <span class="string">'flea'</span>, <span class="string">'problems'</span>, <span class="string">'help'</span>, <span class="string">'please'</span>],				<span class="comment">#切分的词条</span></span><br><span class="line">				[<span class="string">'maybe'</span>, <span class="string">'not'</span>, <span class="string">'take'</span>, <span class="string">'him'</span>, <span class="string">'to'</span>, <span class="string">'dog'</span>, <span class="string">'park'</span>, <span class="string">'stupid'</span>],</span><br><span class="line">				[<span class="string">'my'</span>, <span class="string">'dalmation'</span>, <span class="string">'is'</span>, <span class="string">'so'</span>, <span class="string">'cute'</span>, <span class="string">'I'</span>, <span class="string">'love'</span>, <span class="string">'him'</span>],</span><br><span class="line">				[<span class="string">'stop'</span>, <span class="string">'posting'</span>, <span class="string">'stupid'</span>, <span class="string">'worthless'</span>, <span class="string">'garbage'</span>],</span><br><span class="line">				[<span class="string">'mr'</span>, <span class="string">'licks'</span>, <span class="string">'ate'</span>, <span class="string">'my'</span>, <span class="string">'steak'</span>, <span class="string">'how'</span>, <span class="string">'to'</span>, <span class="string">'stop'</span>, <span class="string">'him'</span>],</span><br><span class="line">				[<span class="string">'quit'</span>, <span class="string">'buying'</span>, <span class="string">'worthless'</span>, <span class="string">'dog'</span>, <span class="string">'food'</span>, <span class="string">'stupid'</span>]]</span><br><span class="line">	classVec = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>]   																<span class="comment">#类别标签向量，1代表侮辱性词汇，0代表不是</span></span><br><span class="line">	<span class="keyword">return</span> postingList,classVec																<span class="comment">#返回实验样本切分的词条和类别标签向量</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:将切分的实验样本词条整理成不重复的词条列表，也就是词汇表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	dataSet - 整理的样本数据集</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	vocabSet - 返回不重复的词条列表，也就是词汇表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createVocabList</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">	vocabSet = set([])  					<span class="comment">#创建一个空的不重复列表</span></span><br><span class="line">	<span class="keyword">for</span> document <span class="keyword">in</span> dataSet:</span><br><span class="line">		vocabSet = vocabSet | set(document) <span class="comment">#取并集</span></span><br><span class="line">	<span class="keyword">return</span> list(vocabSet)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:根据vocabList词汇表，将inputSet向量化，向量的每个元素为1或0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	vocabList - createVocabList返回的列表</span></span><br><span class="line"><span class="string">	inputSet - 切分的词条列表</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	returnVec - 文档向量,词集模型</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setOfWords2Vec</span><span class="params">(vocabList, inputSet)</span>:</span></span><br><span class="line">	returnVec = [<span class="number">0</span>] * len(vocabList)									<span class="comment">#创建一个其中所含元素都为0的向量</span></span><br><span class="line">	<span class="keyword">for</span> word <span class="keyword">in</span> inputSet:												<span class="comment">#遍历每个词条</span></span><br><span class="line">		<span class="keyword">if</span> word <span class="keyword">in</span> vocabList:											<span class="comment">#如果词条存在于词汇表中，则置1</span></span><br><span class="line">			returnVec[vocabList.index(word)] = <span class="number">1</span></span><br><span class="line">		<span class="keyword">else</span>: print(<span class="string">"the word: %s is not in my Vocabulary!"</span> % word)</span><br><span class="line">	<span class="keyword">return</span> returnVec													<span class="comment">#返回文档向量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:朴素贝叶斯分类器训练函数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	trainMatrix - 训练文档矩阵，即setOfWords2Vec返回的returnVec构成的矩阵</span></span><br><span class="line"><span class="string">	trainCategory - 训练类别标签向量，即loadDataSet返回的classVec</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	p0Vect - 非侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">	p1Vect - 侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">	pAbusive - 文档属于侮辱类的概率</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainNB0</span><span class="params">(trainMatrix,trainCategory)</span>:</span></span><br><span class="line">	numTrainDocs = len(trainMatrix)							<span class="comment">#计算训练的文档数目</span></span><br><span class="line">	numWords = len(trainMatrix[<span class="number">0</span>])							<span class="comment">#计算每篇文档的词条数</span></span><br><span class="line">	pAbusive = sum(trainCategory)/float(numTrainDocs)		<span class="comment">#文档属于侮辱类的概率</span></span><br><span class="line">	p0Num = np.zeros(numWords); p1Num = np.zeros(numWords)	<span class="comment">#创建numpy.zeros数组,</span></span><br><span class="line">	p0Denom = <span class="number">0.0</span>; p1Denom = <span class="number">0.0</span>                        	<span class="comment">#分母初始化为0.0</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(numTrainDocs):</span><br><span class="line">		<span class="keyword">if</span> trainCategory[i] == <span class="number">1</span>:							<span class="comment">#统计属于侮辱类的条件概率所需的数据，即P(w0|1),P(w1|1),P(w2|1)···</span></span><br><span class="line">			p1Num += trainMatrix[i]</span><br><span class="line">			p1Denom += sum(trainMatrix[i])</span><br><span class="line">		<span class="keyword">else</span>:												<span class="comment">#统计属于非侮辱类的条件概率所需的数据，即P(w0|0),P(w1|0),P(w2|0)···</span></span><br><span class="line">			p0Num += trainMatrix[i]</span><br><span class="line">			p0Denom += sum(trainMatrix[i])</span><br><span class="line">	p1Vect = p1Num/p1Denom									<span class="comment">#相除</span></span><br><span class="line">	p0Vect = p0Num/p0Denom</span><br><span class="line">	<span class="keyword">return</span> p0Vect,p1Vect,pAbusive							<span class="comment">#返回属于侮辱类的条件概率数组，属于非侮辱类的条件概率数组，文档属于侮辱类的概率</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:朴素贝叶斯分类器分类函数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	vec2Classify - 待分类的词条数组</span></span><br><span class="line"><span class="string">	p0Vec - 侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">	p1Vec -非侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">	pClass1 - 文档属于侮辱类的概率</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	0 - 属于非侮辱类</span></span><br><span class="line"><span class="string">	1 - 属于侮辱类</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifyNB</span><span class="params">(vec2Classify, p0Vec, p1Vec, pClass1)</span>:</span></span><br><span class="line">	p1 = reduce(<span class="keyword">lambda</span> x,y:x*y, vec2Classify * p1Vec) * pClass1    			<span class="comment">#对应元素相乘</span></span><br><span class="line">	p0 = reduce(<span class="keyword">lambda</span> x,y:x*y, vec2Classify * p0Vec) * (<span class="number">1.0</span> - pClass1)</span><br><span class="line">	print(<span class="string">'p0:'</span>,p0)</span><br><span class="line">	print(<span class="string">'p1:'</span>,p1)</span><br><span class="line">	<span class="keyword">if</span> p1 &gt; p0:</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:测试朴素贝叶斯分类器</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	无</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	无</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testingNB</span><span class="params">()</span>:</span></span><br><span class="line">	listOPosts,listClasses = loadDataSet()									<span class="comment">#创建实验样本</span></span><br><span class="line">	myVocabList = createVocabList(listOPosts)								<span class="comment">#创建词汇表</span></span><br><span class="line">	trainMat=[]</span><br><span class="line">	<span class="keyword">for</span> postinDoc <span class="keyword">in</span> listOPosts:</span><br><span class="line">		trainMat.append(setOfWords2Vec(myVocabList, postinDoc))				<span class="comment">#将实验样本向量化</span></span><br><span class="line">	p0V,p1V,pAb = trainNB0(np.array(trainMat),np.array(listClasses))		<span class="comment">#训练朴素贝叶斯分类器</span></span><br><span class="line">	testEntry = [<span class="string">'love'</span>, <span class="string">'my'</span>, <span class="string">'dalmation'</span>]									<span class="comment">#测试样本1</span></span><br><span class="line">	thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))				<span class="comment">#测试样本向量化</span></span><br><span class="line">	<span class="keyword">if</span> classifyNB(thisDoc,p0V,p1V,pAb):</span><br><span class="line">		print(testEntry,<span class="string">'属于侮辱类'</span>)										<span class="comment">#执行分类并打印分类结果</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		print(testEntry,<span class="string">'属于非侮辱类'</span>)										<span class="comment">#执行分类并打印分类结果</span></span><br><span class="line">	testEntry = [<span class="string">'stupid'</span>, <span class="string">'garbage'</span>]										<span class="comment">#测试样本2</span></span><br><span class="line"></span><br><span class="line">	thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))				<span class="comment">#测试样本向量化</span></span><br><span class="line">	<span class="keyword">if</span> classifyNB(thisDoc,p0V,p1V,pAb):</span><br><span class="line">		print(testEntry,<span class="string">'属于侮辱类'</span>)										<span class="comment">#执行分类并打印分类结果</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		print(testEntry,<span class="string">'属于非侮辱类'</span>)										<span class="comment">#执行分类并打印分类结果</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	testingNB()</span><br></pre></td></tr></table></figure>
+<p>我们测试了两个词条，在使用分类器前，也需要对词条向量化，然后使用classifyNB()函数，用朴素贝叶斯公式，计算词条向量属于侮辱类和非侮辱类的概率。运行结果如下：</p>
+<p><img src="img/30.png" alt=""></p>
+<p>从上图可以看出，在计算的时候已经出现了概率为0的情况。如果新实例文本，包含这种概率为0的分词，那么最终的文本属于某个类别的概率也就是0了。显然，这样是不合理的，为了降低这种影响，可以将所有词的出现数初始化为1，并将分母初始化为2。这种做法就叫做拉普拉斯平滑(Laplace Smoothing)又被称为加1平滑，是比较常用的平滑方法，它就是为了解决0概率问题。</p>
+<p>除此之外，另外一个遇到的问题就是下溢出，这是由于太多很小的数相乘造成的。学过数学的人都知道，两个小数相乘，越乘越小，这样就造成了下溢出。在程序中，在相应小数位置进行四舍五入，计算结果可能就变成0了。为了解决这个问题，对乘积结果取自然对数。通过求对数可以避免下溢出或者浮点数舍入导致的错误。同时，采用自然对数进行处理不会有任何损失。下图给出函数f(x)和ln(f(x))的曲线。</p>
+<p><img src="img/31.png" alt=""></p>
+<p>检查这两条曲线，就会发现它们在相同区域内同时增加或者减少，并且在相同点上取到极值。它们的取值虽然不同，但不影响最终结果。因此我们可以对上文的trainNB0(trainMatrix, trainCategory)函数进行更改，修改如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:朴素贝叶斯分类器训练函数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    trainMatrix - 训练文档矩阵，即setOfWords2Vec返回的returnVec构成的矩阵</span></span><br><span class="line"><span class="string">    trainCategory - 训练类别标签向量，即loadDataSet返回的classVec</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    p0Vect - 非侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">    p1Vect - 侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">    pAbusive - 文档属于侮辱类的概率</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainNB0</span><span class="params">(trainMatrix,trainCategory)</span>:</span></span><br><span class="line">    numTrainDocs = len(trainMatrix)                            <span class="comment">#计算训练的文档数目</span></span><br><span class="line">    numWords = len(trainMatrix[<span class="number">0</span>])                            <span class="comment">#计算每篇文档的词条数</span></span><br><span class="line">    pAbusive = sum(trainCategory)/float(numTrainDocs)        <span class="comment">#文档属于侮辱类的概率</span></span><br><span class="line">    p0Num = np.ones(numWords); p1Num = np.ones(numWords)    <span class="comment">#创建numpy.ones数组,词条出现数初始化为1，拉普拉斯平滑</span></span><br><span class="line">    p0Denom = <span class="number">2.0</span>; p1Denom = <span class="number">2.0</span>                            <span class="comment">#分母初始化为2,拉普拉斯平滑</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numTrainDocs):</span><br><span class="line">        <span class="keyword">if</span> trainCategory[i] == <span class="number">1</span>:                            <span class="comment">#统计属于侮辱类的条件概率所需的数据，即P(w0|1),P(w1|1),P(w2|1)···</span></span><br><span class="line">            p1Num += trainMatrix[i]</span><br><span class="line">            p1Denom += sum(trainMatrix[i])</span><br><span class="line">        <span class="keyword">else</span>:                                                <span class="comment">#统计属于非侮辱类的条件概率所需的数据，即P(w0|0),P(w1|0),P(w2|0)···</span></span><br><span class="line">            p0Num += trainMatrix[i]</span><br><span class="line">            p0Denom += sum(trainMatrix[i])</span><br><span class="line">    p1Vect = np.log(p1Num/p1Denom)                            <span class="comment">#取对数，防止下溢出         </span></span><br><span class="line">    p0Vect = np.log(p0Num/p0Denom)         </span><br><span class="line">    <span class="keyword">return</span> p0Vect,p1Vect,pAbusive                            <span class="comment">#返回属于侮辱类的条件概率数组，属于非侮辱类的条件概率数组，文档属于侮辱类的概率</span></span><br></pre></td></tr></table></figure>
+<p>运行代码，就可以得到如下结果：</p>
+<p><img src="img/32.png" alt=""></p>
+<p>这样我们得到的结果就没有问题了，不存在0概率。当然除此之外，我们还需要对代码进行修改classifyNB(vec2Classify, p0Vec, p1Vec, pClass1)函数，修改如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:朴素贝叶斯分类器分类函数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    vec2Classify - 待分类的词条数组</span></span><br><span class="line"><span class="string">    p0Vec - 非侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">    p1Vec -侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">    pClass1 - 文档属于侮辱类的概率</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    0 - 属于非侮辱类</span></span><br><span class="line"><span class="string">    1 - 属于侮辱类</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifyNB</span><span class="params">(vec2Classify, p0Vec, p1Vec, pClass1)</span>:</span></span><br><span class="line">    p1 = sum(vec2Classify * p1Vec) + np.log(pClass1)        <span class="comment">#对应元素相乘。logA * B = logA + logB，所以这里加上log(pClass1)</span></span><br><span class="line">    p0 = sum(vec2Classify * p0Vec) + np.log(<span class="number">1.0</span> - pClass1)</span><br><span class="line">    <span class="keyword">if</span> p1 &gt; p0:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>为啥这么改？因为取自然对数了。logab = loga + logb。</p>
+<p>朴素贝叶斯分类器就改进完毕了。</p>
+<h2 id="四、朴素贝叶斯之过滤垃圾邮件"><a href="#四、朴素贝叶斯之过滤垃圾邮件" class="headerlink" title="四、朴素贝叶斯之过滤垃圾邮件"></a>四、朴素贝叶斯之过滤垃圾邮件</h2><hr>
+<p>在上文那个简单的例子中，我们引入了字符串列表。使用朴素贝叶斯解决一些现实生活中的问题时，需要先从文本内容得到字符串列表，然后生成词向量。下面这个例子中，我们将了解朴素贝叶斯的一个最著名的应用：电子邮件垃圾过滤。首先看一下使用朴素贝叶斯对电子邮件进行分类的步骤：</p>
+<ul>
+<li>收集数据：提供文本文件。</li>
+<li>准备数据：将文本文件解析成词条向量。</li>
+<li>分析数据：检查词条确保解析的正确性。</li>
+<li>训练算法：使用我们之前建立的trainNB0()函数。</li>
+<li>测试算法：使用classifyNB()，并构建一个新的测试函数来计算文档集的错误率。</li>
+<li>使用算法：构建一个完整的程序对一组文档进行分类，将错分的文档输出到屏幕上。</li>
+</ul>
+<h4 id="1、收集数据"><a href="#1、收集数据" class="headerlink" title="1、收集数据"></a>1、收集数据</h4><p>数据我已经为大家准备好了，可以在我的Github上下载： <strong>数据集下载</strong></p>
+<p>有两个文件夹ham和spam，spam文件下的txt文件为垃圾邮件。</p>
+<h4 id="2、准备数据"><a href="#2、准备数据" class="headerlink" title="2、准备数据"></a>2、准备数据</h4><p>对于英文文本，我们可以以非字母、非数字作为符号进行切分，使用split函数即可。编写代码如下：</p>
+<p>这样我们就得到了词汇表，结果如下图所示：</p>
+<p><img src="img/33.png" alt=""></p>
+<p>根据词汇表，我们就可以将每个文本向量化。我们将数据集分为训练集和测试集，使用交叉验证的方式测试朴素贝叶斯分类器的准确性。编写代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:将切分的实验样本词条整理成不重复的词条列表，也就是词汇表</span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	dataSet - 整理的样本数据集</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	vocabSet - 返回不重复的词条列表，也就是词汇表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createVocabList</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">    vocabSet = set([])  					<span class="comment">#创建一个空的不重复列表</span></span><br><span class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> dataSet:</span><br><span class="line">        vocabSet = vocabSet | set(document) <span class="comment">#取并集</span></span><br><span class="line">    <span class="keyword">return</span> list(vocabSet)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:根据vocabList词汇表，将inputSet向量化，向量的每个元素为1或0</span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	vocabList - createVocabList返回的列表</span></span><br><span class="line"><span class="string">	inputSet - 切分的词条列表</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	returnVec - 文档向量,词集模型</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setOfWords2Vec</span><span class="params">(vocabList, inputSet)</span>:</span></span><br><span class="line">    returnVec = [<span class="number">0</span>] * len(vocabList)									<span class="comment">#创建一个其中所含元素都为0的向量</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:												<span class="comment">#遍历每个词条</span></span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:											<span class="comment">#如果词条存在于词汇表中，则置1</span></span><br><span class="line">            returnVec[vocabList.index(word)] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>: print(<span class="string">"the word: %s is not in my Vocabulary!"</span> % word)</span><br><span class="line">    <span class="keyword">return</span> returnVec													<span class="comment">#返回文档向量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:根据vocabList词汇表，构建词袋模型</span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	vocabList - createVocabList返回的列表</span></span><br><span class="line"><span class="string">	inputSet - 切分的词条列表</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	returnVec - 文档向量,词袋模型</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bagOfWords2VecMN</span><span class="params">(vocabList, inputSet)</span>:</span></span><br><span class="line">    returnVec = [<span class="number">0</span>]*len(vocabList)										<span class="comment">#创建一个其中所含元素都为0的向量</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:												<span class="comment">#遍历每个词条</span></span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:											<span class="comment">#如果词条存在于词汇表中，则计数加一</span></span><br><span class="line">            returnVec[vocabList.index(word)] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> returnVec													<span class="comment">#返回词袋模型</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:朴素贝叶斯分类器训练函数</span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	trainMatrix - 训练文档矩阵，即setOfWords2Vec返回的returnVec构成的矩阵</span></span><br><span class="line"><span class="string">	trainCategory - 训练类别标签向量，即loadDataSet返回的classVec</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	p0Vect - 非侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">	p1Vect - 侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">	pAbusive - 文档属于侮辱类的概率</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainNB0</span><span class="params">(trainMatrix,trainCategory)</span>:</span></span><br><span class="line">    numTrainDocs = len(trainMatrix)							<span class="comment">#计算训练的文档数目</span></span><br><span class="line">    numWords = len(trainMatrix[<span class="number">0</span>])							<span class="comment">#计算每篇文档的词条数</span></span><br><span class="line">    pAbusive = sum(trainCategory)/float(numTrainDocs)		<span class="comment">#文档属于侮辱类的概率</span></span><br><span class="line">    p0Num = np.ones(numWords); p1Num = np.ones(numWords)	<span class="comment">#创建numpy.ones数组,词条出现数初始化为1，拉普拉斯平滑</span></span><br><span class="line">    p0Denom = <span class="number">2.0</span>; p1Denom = <span class="number">2.0</span>                        	<span class="comment">#分母初始化为2,拉普拉斯平滑</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numTrainDocs):</span><br><span class="line">        <span class="keyword">if</span> trainCategory[i] == <span class="number">1</span>:							<span class="comment">#统计属于侮辱类的条件概率所需的数据，即P(w0|1),P(w1|1),P(w2|1)···</span></span><br><span class="line">            p1Num += trainMatrix[i]</span><br><span class="line">            p1Denom += sum(trainMatrix[i])</span><br><span class="line">        <span class="keyword">else</span>:												<span class="comment">#统计属于非侮辱类的条件概率所需的数据，即P(w0|0),P(w1|0),P(w2|0)···</span></span><br><span class="line">            p0Num += trainMatrix[i]</span><br><span class="line">            p0Denom += sum(trainMatrix[i])</span><br><span class="line">    p1Vect = np.log(p1Num/p1Denom)							<span class="comment">#取对数，防止下溢出</span></span><br><span class="line">    p0Vect = np.log(p0Num/p0Denom)</span><br><span class="line">    <span class="keyword">return</span> p0Vect,p1Vect,pAbusive							<span class="comment">#返回属于侮辱类的条件概率数组，属于非侮辱类的条件概率数组，文档属于侮辱类的概率</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:朴素贝叶斯分类器分类函数</span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">	vec2Classify - 待分类的词条数组</span></span><br><span class="line"><span class="string">	p0Vec - 非侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">	p1Vec -侮辱类的条件概率数组</span></span><br><span class="line"><span class="string">	pClass1 - 文档属于侮辱类的概率</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">	0 - 属于非侮辱类</span></span><br><span class="line"><span class="string">	1 - 属于侮辱类</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifyNB</span><span class="params">(vec2Classify, p0Vec, p1Vec, pClass1)</span>:</span></span><br><span class="line">    p1 = sum(vec2Classify * p1Vec) + np.log(pClass1)    	<span class="comment">#对应元素相乘。logA * B = logA + logB，所以这里加上log(pClass1)</span></span><br><span class="line">    p0 = sum(vec2Classify * p0Vec) + np.log(<span class="number">1.0</span> - pClass1)</span><br><span class="line">    <span class="keyword">if</span> p1 &gt; p0:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:接收一个大字符串并将其解析为字符串列表</span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    无</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    无</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">textParse</span><span class="params">(bigString)</span>:</span>                                                   <span class="comment">#将字符串转换为字符列表</span></span><br><span class="line">    listOfTokens = re.split(<span class="string">r'[\W*]'</span>, bigString)                              <span class="comment">#将特殊符号作为切分标志进行字符串切分，即非字母、非数字</span></span><br><span class="line">    <span class="keyword">return</span> [tok.lower() <span class="keyword">for</span> tok <span class="keyword">in</span> listOfTokens <span class="keyword">if</span> len(tok) &gt; <span class="number">2</span>]            <span class="comment">#除了单个字母，例如大写的I，其它单词变成小写</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:测试朴素贝叶斯分类器</span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    无</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    无</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spamTest</span><span class="params">()</span>:</span></span><br><span class="line">    docList = []; classList = []; fullText = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">26</span>):                                                  <span class="comment">#遍历25个txt文件</span></span><br><span class="line">        wordList = textParse(open(<span class="string">'email/spam/%d.txt'</span> % i, <span class="string">'r'</span>).read())     <span class="comment">#读取每个垃圾邮件，并字符串转换成字符串列表</span></span><br><span class="line">        docList.append(wordList)</span><br><span class="line">        fullText.append(wordList)</span><br><span class="line">        classList.append(<span class="number">1</span>)                                                 <span class="comment">#标记垃圾邮件，1表示垃圾文件</span></span><br><span class="line">        wordList = textParse(open(<span class="string">'email/ham/%d.txt'</span> % i, <span class="string">'r'</span>).read())      <span class="comment">#读取每个非垃圾邮件，并字符串转换成字符串列表</span></span><br><span class="line">        docList.append(wordList)</span><br><span class="line">        fullText.append(wordList)</span><br><span class="line">        classList.append(<span class="number">0</span>)                                                 <span class="comment">#标记非垃圾邮件，1表示垃圾文件</span></span><br><span class="line">    vocabList = createVocabList(docList)                                    <span class="comment">#创建词汇表，不重复</span></span><br><span class="line">    trainingSet = list(range(<span class="number">50</span>)); testSet = []                             <span class="comment">#创建存储训练集的索引值的列表和测试集的索引值的列表</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):                                                     <span class="comment">#从50个邮件中，随机挑选出40个作为训练集,10个做测试集</span></span><br><span class="line">        randIndex = int(random.uniform(<span class="number">0</span>, len(trainingSet)))                <span class="comment">#随机选取索索引值</span></span><br><span class="line">        testSet.append(trainingSet[randIndex])                              <span class="comment">#添加测试集的索引值</span></span><br><span class="line">        <span class="keyword">del</span>(trainingSet[randIndex])                                         <span class="comment">#在训练集列表中删除添加到测试集的索引值</span></span><br><span class="line">    trainMat = []; trainClasses = []                                        <span class="comment">#创建训练集矩阵和训练集类别标签系向量</span></span><br><span class="line">    <span class="keyword">for</span> docIndex <span class="keyword">in</span> trainingSet:                                            <span class="comment">#遍历训练集</span></span><br><span class="line">        trainMat.append(setOfWords2Vec(vocabList, docList[docIndex]))       <span class="comment">#将生成的词集模型添加到训练矩阵中</span></span><br><span class="line">        trainClasses.append(classList[docIndex])                            <span class="comment">#将类别添加到训练集类别标签系向量中</span></span><br><span class="line">    p0V, p1V, pSpam = trainNB0(np.array(trainMat), np.array(trainClasses))  <span class="comment">#训练朴素贝叶斯模型</span></span><br><span class="line">    errorCount = <span class="number">0</span>                                                          <span class="comment">#错误分类计数</span></span><br><span class="line">    <span class="keyword">for</span> docIndex <span class="keyword">in</span> testSet:                                                <span class="comment">#遍历测试集</span></span><br><span class="line">        wordVector = setOfWords2Vec(vocabList, docList[docIndex])           <span class="comment">#测试集的词集模型</span></span><br><span class="line">        <span class="keyword">if</span> classifyNB(np.array(wordVector), p0V, p1V, pSpam) != classList[docIndex]:    <span class="comment">#如果分类错误</span></span><br><span class="line">            errorCount += <span class="number">1</span>                                                 <span class="comment">#错误计数加1</span></span><br><span class="line">            print(<span class="string">"分类错误的测试集："</span>,docList[docIndex])</span><br><span class="line">    print(<span class="string">'错误率：%.2f%%'</span> % (float(errorCount) / len(testSet) * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    spamTest()</span><br></pre></td></tr></table></figure></p>
+<p>运行结果如下：</p>
+<p><img src="img/34.png" alt=""></p>
+<p>函数spamTest()会输出在10封随机选择的电子邮件上的分类错误概率。既然这些电子邮件是随机选择的，所以每次的输出结果可能有些差别。如果发现错误的话，函数会输出错误的文档的此表，这样就可以了解到底是哪篇文档发生了错误。如果想要更好地估计错误率，那么就应该将上述过程重复多次，比如说10次，然后求平均值。相比之下，将垃圾邮件误判为正常邮件要比将正常邮件归为垃圾邮件好。为了避免错误，有多种方式可以用来修正分类器，这些内容会在后续文章中进行讨论。</p>
+<h2 id="五、朴素贝叶斯之新浪新闻分类-Sklearn"><a href="#五、朴素贝叶斯之新浪新闻分类-Sklearn" class="headerlink" title="五、朴素贝叶斯之新浪新闻分类(Sklearn)"></a>五、朴素贝叶斯之新浪新闻分类(Sklearn)</h2><h4 id="1、中文语句切分"><a href="#1、中文语句切分" class="headerlink" title="1、中文语句切分"></a>1、中文语句切分</h4><p>考虑一个问题，英文的语句可以通过非字母和非数字进行切分，但是汉语句子呢？就比如我打的这一堆字，该如何进行切分呢？我们自己写个规则？</p>
+<p>幸运地是，这部分的工作不需要我们自己做了，可以直接使用第三方分词组件，即jieba。</p>
+<p>jieba已经兼容Python2和Python3，使用如下指令直接安装即可：</p>
+<p>Python中文分词组件使用简单：</p>
+<ul>
+<li>民间教程：<a href="https://www.oschina.net/p/jieba" target="_blank" rel="noopener">https://www.oschina.net/p/jieba</a></li>
+<li>官方教程：<a href="https://github.com/fxsjy/jieba" target="_blank" rel="noopener">https://github.com/fxsjy/jieba</a></li>
+</ul>
+<p>新闻分类数据集我也已经准备好，可以到我的Github进行下载：<a href="https://github.com/yaoguangju/machine_learning/blob/master/%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/3.%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%B9%8B%E6%96%B0%E6%B5%AA%E6%96%B0%E9%97%BB%E5%88%86%E7%B1%BB/stopwords_cn.txt" target="_blank" rel="noopener">数据集下载</a></p>
+<p>数据集已经做好分类，分文件夹保存，分类结果如下：</p>
+<p><img src="img/35.png" alt=""></p>
+<p>数据集已经准备好，接下来，让我们直接进入正题。切分中文语句，编写如下代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">TextProcessing</span><span class="params">(folder_path)</span>:</span></span><br><span class="line">    folder_list = os.listdir(folder_path)                        <span class="comment">#查看folder_path下的文件</span></span><br><span class="line">    data_list = []                                                <span class="comment">#训练集</span></span><br><span class="line">    class_list = []</span><br><span class="line"></span><br><span class="line">    <span class="comment">#遍历每个子文件夹</span></span><br><span class="line">    <span class="keyword">for</span> folder <span class="keyword">in</span> folder_list:</span><br><span class="line">        new_folder_path = os.path.join(folder_path, folder)        <span class="comment">#根据子文件夹，生成新的路径</span></span><br><span class="line">        files = os.listdir(new_folder_path)                        <span class="comment">#存放子文件夹下的txt文件的列表</span></span><br><span class="line"></span><br><span class="line">        j = <span class="number">1</span></span><br><span class="line">        <span class="comment">#遍历每个txt文件</span></span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> j &gt; <span class="number">100</span>:                                            <span class="comment">#每类txt样本数最多100个</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(new_folder_path, file), <span class="string">'r'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:    <span class="comment">#打开txt文件</span></span><br><span class="line">                raw = f.read()</span><br><span class="line"></span><br><span class="line">            word_cut = jieba.cut(raw, cut_all = <span class="keyword">False</span>)            <span class="comment">#精简模式，返回一个可迭代的generator</span></span><br><span class="line">            word_list = list(word_cut)                            <span class="comment">#generator转换为list</span></span><br><span class="line"></span><br><span class="line">            data_list.append(word_list)</span><br><span class="line">            class_list.append(folder)</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        print(data_list)</span><br><span class="line">        print(class_list)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment">#文本预处理</span></span><br><span class="line">    folder_path = <span class="string">'./SogouC/Sample'</span>                <span class="comment">#训练集存放地址</span></span><br><span class="line">    TextProcessing(folder_path)</span><br></pre></td></tr></table></figure></p>
+<p>代码运行结果如下所示，可以看到，我们已经顺利将每个文本进行切分，并进行了类别标记。</p>
+<p><img src="img/36.png" alt=""></p>
+<h4 id="2、文本特征选择"><a href="#2、文本特征选择" class="headerlink" title="2、文本特征选择"></a>2、文本特征选择</h4><p>我们将所有文本分成训练集和测试集，并对训练集中的所有单词进行词频统计，并按降序排序。也就是将出现次数多的词语在前，出现次数少的词语在后进行排序。编写代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:中文文本处理</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    folder_path - 文本存放的路径</span></span><br><span class="line"><span class="string">    test_size - 测试集占比，默认占所有数据集的百分之20</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    all_words_list - 按词频降序排序的训练集列表</span></span><br><span class="line"><span class="string">    train_data_list - 训练集列表</span></span><br><span class="line"><span class="string">    test_data_list - 测试集列表</span></span><br><span class="line"><span class="string">    train_class_list - 训练集标签列表</span></span><br><span class="line"><span class="string">    test_class_list - 测试集标签列表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">TextProcessing</span><span class="params">(folder_path, test_size = <span class="number">0.2</span>)</span>:</span></span><br><span class="line">    folder_list = os.listdir(folder_path)                        <span class="comment">#查看folder_path下的文件</span></span><br><span class="line">    data_list = []                                                <span class="comment">#数据集数据</span></span><br><span class="line">    class_list = []                                                <span class="comment">#数据集类别</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#遍历每个子文件夹</span></span><br><span class="line">    <span class="keyword">for</span> folder <span class="keyword">in</span> folder_list:</span><br><span class="line">        new_folder_path = os.path.join(folder_path, folder)        <span class="comment">#根据子文件夹，生成新的路径</span></span><br><span class="line">        files = os.listdir(new_folder_path)                        <span class="comment">#存放子文件夹下的txt文件的列表</span></span><br><span class="line"></span><br><span class="line">        j = <span class="number">1</span></span><br><span class="line">        <span class="comment">#遍历每个txt文件</span></span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> j &gt; <span class="number">100</span>:                                            <span class="comment">#每类txt样本数最多100个</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(new_folder_path, file), <span class="string">'r'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:    <span class="comment">#打开txt文件</span></span><br><span class="line">                raw = f.read()</span><br><span class="line"></span><br><span class="line">            word_cut = jieba.cut(raw, cut_all = <span class="keyword">False</span>)            <span class="comment">#精简模式，返回一个可迭代的generator</span></span><br><span class="line">            word_list = list(word_cut)                            <span class="comment">#generator转换为list</span></span><br><span class="line"></span><br><span class="line">            data_list.append(word_list)                            <span class="comment">#添加数据集数据</span></span><br><span class="line">            class_list.append(folder)                            <span class="comment">#添加数据集类别</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    data_class_list = list(zip(data_list, class_list))            <span class="comment">#zip压缩合并，将数据与标签对应压缩</span></span><br><span class="line">    random.shuffle(data_class_list)                                <span class="comment">#将data_class_list乱序</span></span><br><span class="line">    index = int(len(data_class_list) * test_size) + <span class="number">1</span>            <span class="comment">#训练集和测试集切分的索引值</span></span><br><span class="line">    train_list = data_class_list[index:]                        <span class="comment">#训练集</span></span><br><span class="line">    test_list = data_class_list[:index]                            <span class="comment">#测试集</span></span><br><span class="line">    train_data_list, train_class_list = zip(*train_list)        <span class="comment">#训练集解压缩</span></span><br><span class="line">    test_data_list, test_class_list = zip(*test_list)            <span class="comment">#测试集解压缩</span></span><br><span class="line"></span><br><span class="line">    all_words_dict = &#123;&#125;                                            <span class="comment">#统计训练集词频</span></span><br><span class="line">    <span class="keyword">for</span> word_list <span class="keyword">in</span> train_data_list:</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> word_list:</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> all_words_dict.keys():</span><br><span class="line">                all_words_dict[word] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                all_words_dict[word] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#根据键的值倒序排序</span></span><br><span class="line">    all_words_tuple_list = sorted(all_words_dict.items(), key = <span class="keyword">lambda</span> f:f[<span class="number">1</span>], reverse = <span class="keyword">True</span>)</span><br><span class="line">    all_words_list, all_words_nums = zip(*all_words_tuple_list)    <span class="comment">#解压缩</span></span><br><span class="line">    all_words_list = list(all_words_list)                        <span class="comment">#转换成列表</span></span><br><span class="line">    <span class="keyword">return</span> all_words_list, train_data_list, test_data_list, train_class_list, test_class_list</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment">#文本预处理</span></span><br><span class="line">    folder_path = <span class="string">'./SogouC/Sample'</span>                <span class="comment">#训练集存放地址</span></span><br><span class="line">    all_words_list, train_data_list, test_data_list, train_class_list, test_class_list = TextProcessing(folder_path, test_size=<span class="number">0.2</span>)</span><br><span class="line">    print(all_words_list)</span><br></pre></td></tr></table></figure></p>
+<p>all_words_list就是将所有训练集的切分结果通过词频降序排列构成的单词合集。观察一下打印结果，不难发现，这里包含了很多标点符号，很显然，这些标点符号是不能作为新闻分类的特征的。总不能说，应为这个文章逗号多，所以它是xx类新闻吧？为了降低这些高频的符号对分类结果的影响，我们应该怎么做呢？答曰：抛弃他们！ 除了这些，还有”在”，”了”这样对新闻分类无关痛痒的词。并且还有一些数字，数字显然也不能作为分类新闻的特征。所以要消除它们对分类结果的影响，我们可以定制一个规则。</p>
+<p><img src="img/37.png" alt=""></p>
+<p>一个简单的规则可以这样制定：首先去掉高频词，至于去掉多少个高频词，我们可以通过观察去掉高频词个数和最终检测准确率的关系来确定。除此之外，去除数字，不把数字作为分类特征。同时，去除一些特定的词语，比如：”的”，”一”，”在”，”不”，”当然”,”怎么”这类的对新闻分类无影响的介词、代词、连词。怎么去除这些词呢？可以使用已经整理好的stopwords_cn.txt文本。下载地址：点我下载</p>
+<p>这个文件是这个样子的：</p>
+<p><img src="img/38.png" alt=""></p>
+<p>所以我们可以根据这个文档，将这些单词去除，不作为分类的特征。我们先去除前100个高频词汇，然后编写代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:中文文本处理</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    folder_path - 文本存放的路径</span></span><br><span class="line"><span class="string">    test_size - 测试集占比，默认占所有数据集的百分之20</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    all_words_list - 按词频降序排序的训练集列表</span></span><br><span class="line"><span class="string">    train_data_list - 训练集列表</span></span><br><span class="line"><span class="string">    test_data_list - 测试集列表</span></span><br><span class="line"><span class="string">    train_class_list - 训练集标签列表</span></span><br><span class="line"><span class="string">    test_class_list - 测试集标签列表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">TextProcessing</span><span class="params">(folder_path, test_size = <span class="number">0.2</span>)</span>:</span></span><br><span class="line">    folder_list = os.listdir(folder_path)                        <span class="comment">#查看folder_path下的文件</span></span><br><span class="line">    data_list = []                                                <span class="comment">#数据集数据</span></span><br><span class="line">    class_list = []                                                <span class="comment">#数据集类别</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#遍历每个子文件夹</span></span><br><span class="line">    <span class="keyword">for</span> folder <span class="keyword">in</span> folder_list:</span><br><span class="line">        new_folder_path = os.path.join(folder_path, folder)        <span class="comment">#根据子文件夹，生成新的路径</span></span><br><span class="line">        files = os.listdir(new_folder_path)                        <span class="comment">#存放子文件夹下的txt文件的列表</span></span><br><span class="line"></span><br><span class="line">        j = <span class="number">1</span></span><br><span class="line">        <span class="comment">#遍历每个txt文件</span></span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> j &gt; <span class="number">100</span>:                                            <span class="comment">#每类txt样本数最多100个</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(new_folder_path, file), <span class="string">'r'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:    <span class="comment">#打开txt文件</span></span><br><span class="line">                raw = f.read()</span><br><span class="line"></span><br><span class="line">            word_cut = jieba.cut(raw, cut_all = <span class="keyword">False</span>)            <span class="comment">#精简模式，返回一个可迭代的generator</span></span><br><span class="line">            word_list = list(word_cut)                            <span class="comment">#generator转换为list</span></span><br><span class="line"></span><br><span class="line">            data_list.append(word_list)                            <span class="comment">#添加数据集数据</span></span><br><span class="line">            class_list.append(folder)                            <span class="comment">#添加数据集类别</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    data_class_list = list(zip(data_list, class_list))            <span class="comment">#zip压缩合并，将数据与标签对应压缩</span></span><br><span class="line">    random.shuffle(data_class_list)                                <span class="comment">#将data_class_list乱序</span></span><br><span class="line">    index = int(len(data_class_list) * test_size) + <span class="number">1</span>            <span class="comment">#训练集和测试集切分的索引值</span></span><br><span class="line">    train_list = data_class_list[index:]                        <span class="comment">#训练集</span></span><br><span class="line">    test_list = data_class_list[:index]                            <span class="comment">#测试集</span></span><br><span class="line">    train_data_list, train_class_list = zip(*train_list)        <span class="comment">#训练集解压缩</span></span><br><span class="line">    test_data_list, test_class_list = zip(*test_list)            <span class="comment">#测试集解压缩</span></span><br><span class="line"></span><br><span class="line">    all_words_dict = &#123;&#125;                                            <span class="comment">#统计训练集词频</span></span><br><span class="line">    <span class="keyword">for</span> word_list <span class="keyword">in</span> train_data_list:</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> word_list:</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> all_words_dict.keys():</span><br><span class="line">                all_words_dict[word] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                all_words_dict[word] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#根据键的值倒序排序</span></span><br><span class="line">    all_words_tuple_list = sorted(all_words_dict.items(), key = <span class="keyword">lambda</span> f:f[<span class="number">1</span>], reverse = <span class="keyword">True</span>)</span><br><span class="line">    all_words_list, all_words_nums = zip(*all_words_tuple_list)    <span class="comment">#解压缩</span></span><br><span class="line">    all_words_list = list(all_words_list)                        <span class="comment">#转换成列表</span></span><br><span class="line">    <span class="keyword">return</span> all_words_list, train_data_list, test_data_list, train_class_list, test_class_list</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:读取文件里的内容，并去重</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    words_file - 文件路径</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    words_set - 读取的内容的set集合</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">MakeWordsSet</span><span class="params">(words_file)</span>:</span></span><br><span class="line">    words_set = set()                                            <span class="comment">#创建set集合</span></span><br><span class="line">    <span class="keyword">with</span> open(words_file, <span class="string">'r'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:        <span class="comment">#打开文件</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():                                <span class="comment">#一行一行读取</span></span><br><span class="line">            word = line.strip()                                    <span class="comment">#去回车</span></span><br><span class="line">            <span class="keyword">if</span> len(word) &gt; <span class="number">0</span>:                                    <span class="comment">#有文本，则添加到words_set中</span></span><br><span class="line">                words_set.add(word)</span><br><span class="line">    <span class="keyword">return</span> words_set                                             <span class="comment">#返回处理结果</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:文本特征选取</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    all_words_list - 训练集所有文本列表</span></span><br><span class="line"><span class="string">    deleteN - 删除词频最高的deleteN个词</span></span><br><span class="line"><span class="string">    stopwords_set - 指定的结束语</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    feature_words - 特征集</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">words_dict</span><span class="params">(all_words_list, deleteN, stopwords_set = set<span class="params">()</span>)</span>:</span></span><br><span class="line">    feature_words = []                            <span class="comment">#特征列表</span></span><br><span class="line">    n = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> range(deleteN, len(all_words_list), <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> n &gt; <span class="number">1000</span>:                            <span class="comment">#feature_words的维度为1000</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="comment">#如果这个词不是数字，并且不是指定的结束语，并且单词长度大于1小于5，那么这个词就可以作为特征词</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> all_words_list[t].isdigit() <span class="keyword">and</span> all_words_list[t] <span class="keyword">not</span> <span class="keyword">in</span> stopwords_set <span class="keyword">and</span> <span class="number">1</span> &lt; len(all_words_list[t]) &lt; <span class="number">5</span>:</span><br><span class="line">            feature_words.append(all_words_list[t])</span><br><span class="line">        n += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> feature_words</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment">#文本预处理</span></span><br><span class="line">    folder_path = <span class="string">'./SogouC/Sample'</span>                <span class="comment">#训练集存放地址</span></span><br><span class="line">    all_words_list, train_data_list, test_data_list, train_class_list, test_class_list = TextProcessing(folder_path, test_size=<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#生成stopwords_set</span></span><br><span class="line">    stopwords_file = <span class="string">'./stopwords_cn.txt'</span></span><br><span class="line">    stopwords_set = MakeWordsSet(stopwords_file)</span><br><span class="line"></span><br><span class="line">    feature_words = words_dict(all_words_list, <span class="number">100</span>, stopwords_set)</span><br><span class="line">    print(feature_words)</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="img/39.png" alt=""></p>
+<p>可以看到，我们已经滤除了那些没有用的词组，这个feature_words就是我们最终选出的用于新闻分类的特征。随后，我们就可以根据feature_words，将文本向量化，然后用于训练朴素贝叶斯分类器。这个向量化的思想和第三章的思想一致，因此不再累述。</p>
+<h4 id="3、使用Sklearn构建朴素贝叶斯分类器"><a href="#3、使用Sklearn构建朴素贝叶斯分类器" class="headerlink" title="3、使用Sklearn构建朴素贝叶斯分类器"></a>3、使用Sklearn构建朴素贝叶斯分类器</h4><p>数据已经处理好了，接下来就可以使用sklearn构建朴素贝叶斯分类器了。</p>
+<p>官方英文文档地址：文档地址</p>
+<p>朴素贝叶斯是一类比较简单的算法，scikit-learn中朴素贝叶斯类库的使用也比较简单。相对于决策树，KNN之类的算法，朴素贝叶斯需要关注的参数是比较少的，这样也比较容易掌握。在scikit-learn中，一共有3个朴素贝叶斯的分类算法类。分别是GaussianNB，MultinomialNB和BernoulliNB。其中GaussianNB就是先验为高斯分布的朴素贝叶斯，MultinomialNB就是先验为多项式分布的朴素贝叶斯，而BernoulliNB就是先验为伯努利分布的朴素贝叶斯。上篇文章讲解的先验概率模型就是先验概率为多项式分布的朴素贝叶斯。</p>
+<p><img src="img/40.png" alt=""></p>
+<p>对于新闻分类，属于多分类问题。我们可以使用MultinamialNB()完成我们的新闻分类问题。另外两个函数的使用暂且不再进行扩展，可以自行学习。MultinomialNB假设特征的先验概率为多项式分布，即如下式：</p>
+<p><img src="img/41.png" alt=""></p>
+<p>其中， P(Xj = Xjl | Y = Ck)是第k个类别的第j维特征的第l个取值条件概率。mk是训练集中输出为第k类的样本个数。λ为一个大于0的常数，尝尝取值为1，即拉普拉斯平滑，也可以取其他值。</p>
+<p>接下来，我们看下MultinamialNB这个函数，只有3个参数：</p>
+<p><img src="img/42.png" alt=""></p>
+<p>参数说明如下：</p>
+<ul>
+<li>alpha：浮点型可选参数，默认为1.0，其实就是添加拉普拉斯平滑，即为上述公式中的λ ，如果这个参数设置为0，就是不添加平滑；</li>
+<li>fit_prior：布尔型可选参数，默认为True。布尔参数fit_prior表示是否要考虑先验概率，如果是false,则所有的样本类别输出都有相同的类别先验概率。否则可以自己用第三个参数class_prior输入先验概率，或者不输入第三个参数class_prior让MultinomialNB自己从训练集样本来计算先验概率，此时的先验概率为P(Y=Ck)=mk/m。其中m为训练集样本总数量，mk为输出为第k类别的训练集样本数。</li>
+<li>class_prior：可选参数，默认为None。<br>总结如下：</li>
+</ul>
+<p><img src="img/43.png" alt=""></p>
+<p>除此之外，MultinamialNB也有一些方法供我们使用：</p>
+<p><img src="img/44.png" alt=""></p>
+<p>MultinomialNB一个重要的功能是有partial_fit方法，这个方法的一般用在如果训练集数据量非常大，一次不能全部载入内存的时候。这时我们可以把训练集分成若干等分，重复调用partial_fit来一步步的学习训练集，非常方便。GaussianNB和BernoulliNB也有类似的功能。 在使用MultinomialNB的fit方法或者partial_fit方法拟合数据后，我们可以进行预测。此时预测有三种方法，包括predict，predict_log_proba和predict_proba。predict方法就是我们最常用的预测方法，直接给出测试集的预测类别输出。predict_proba则不同，它会给出测试集样本在各个类别上预测的概率。容易理解，predict_proba预测出的各个类别概率里的最大值对应的类别，也就是predict方法得到类别。predict_log_proba和predict_proba类似，它会给出测试集样本在各个类别上预测的概率的一个对数转化。转化后predict_log_proba预测出的各个类别对数概率里的最大值对应的类别，也就是predict方法得到类别。具体细节不再讲解，可参照官网手册。</p>
+<p>了解了这些，我们就可以编写代码，通过观察取不同的去掉前deleteN个高频词的个数与最终检测准确率的关系，确定deleteN的取值<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:中文文本处理</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    folder_path - 文本存放的路径</span></span><br><span class="line"><span class="string">    test_size - 测试集占比，默认占所有数据集的百分之20</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    all_words_list - 按词频降序排序的训练集列表</span></span><br><span class="line"><span class="string">    train_data_list - 训练集列表</span></span><br><span class="line"><span class="string">    test_data_list - 测试集列表</span></span><br><span class="line"><span class="string">    train_class_list - 训练集标签列表</span></span><br><span class="line"><span class="string">    test_class_list - 测试集标签列表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">TextProcessing</span><span class="params">(folder_path, test_size = <span class="number">0.2</span>)</span>:</span></span><br><span class="line">    folder_list = os.listdir(folder_path)                        <span class="comment">#查看folder_path下的文件</span></span><br><span class="line">    data_list = []                                                <span class="comment">#数据集数据</span></span><br><span class="line">    class_list = []                                                <span class="comment">#数据集类别</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#遍历每个子文件夹</span></span><br><span class="line">    <span class="keyword">for</span> folder <span class="keyword">in</span> folder_list:</span><br><span class="line">        new_folder_path = os.path.join(folder_path, folder)        <span class="comment">#根据子文件夹，生成新的路径</span></span><br><span class="line">        files = os.listdir(new_folder_path)                        <span class="comment">#存放子文件夹下的txt文件的列表</span></span><br><span class="line"></span><br><span class="line">        j = <span class="number">1</span></span><br><span class="line">        <span class="comment">#遍历每个txt文件</span></span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> j &gt; <span class="number">100</span>:                                            <span class="comment">#每类txt样本数最多100个</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">with</span> open(os.path.join(new_folder_path, file), <span class="string">'r'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:    <span class="comment">#打开txt文件</span></span><br><span class="line">                raw = f.read()</span><br><span class="line"></span><br><span class="line">            word_cut = jieba.cut(raw, cut_all = <span class="keyword">False</span>)            <span class="comment">#精简模式，返回一个可迭代的generator</span></span><br><span class="line">            word_list = list(word_cut)                            <span class="comment">#generator转换为list</span></span><br><span class="line"></span><br><span class="line">            data_list.append(word_list)                            <span class="comment">#添加数据集数据</span></span><br><span class="line">            class_list.append(folder)                            <span class="comment">#添加数据集类别</span></span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    data_class_list = list(zip(data_list, class_list))            <span class="comment">#zip压缩合并，将数据与标签对应压缩</span></span><br><span class="line">    random.shuffle(data_class_list)                                <span class="comment">#将data_class_list乱序</span></span><br><span class="line">    index = int(len(data_class_list) * test_size) + <span class="number">1</span>            <span class="comment">#训练集和测试集切分的索引值</span></span><br><span class="line">    train_list = data_class_list[index:]                        <span class="comment">#训练集</span></span><br><span class="line">    test_list = data_class_list[:index]                            <span class="comment">#测试集</span></span><br><span class="line">    train_data_list, train_class_list = zip(*train_list)        <span class="comment">#训练集解压缩</span></span><br><span class="line">    test_data_list, test_class_list = zip(*test_list)            <span class="comment">#测试集解压缩</span></span><br><span class="line"></span><br><span class="line">    all_words_dict = &#123;&#125;                                            <span class="comment">#统计训练集词频</span></span><br><span class="line">    <span class="keyword">for</span> word_list <span class="keyword">in</span> train_data_list:</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> word_list:</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> all_words_dict.keys():</span><br><span class="line">                all_words_dict[word] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                all_words_dict[word] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#根据键的值倒序排序</span></span><br><span class="line">    all_words_tuple_list = sorted(all_words_dict.items(), key = <span class="keyword">lambda</span> f:f[<span class="number">1</span>], reverse = <span class="keyword">True</span>)</span><br><span class="line">    all_words_list, all_words_nums = zip(*all_words_tuple_list)    <span class="comment">#解压缩</span></span><br><span class="line">    all_words_list = list(all_words_list)                        <span class="comment">#转换成列表</span></span><br><span class="line">    <span class="keyword">return</span> all_words_list, train_data_list, test_data_list, train_class_list, test_class_list</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:读取文件里的内容，并去重</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    words_file - 文件路径</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    words_set - 读取的内容的set集合</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">MakeWordsSet</span><span class="params">(words_file)</span>:</span></span><br><span class="line">    words_set = set()                                            <span class="comment">#创建set集合</span></span><br><span class="line">    <span class="keyword">with</span> open(words_file, <span class="string">'r'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:        <span class="comment">#打开文件</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():                                <span class="comment">#一行一行读取</span></span><br><span class="line">            word = line.strip()                                    <span class="comment">#去回车</span></span><br><span class="line">            <span class="keyword">if</span> len(word) &gt; <span class="number">0</span>:                                    <span class="comment">#有文本，则添加到words_set中</span></span><br><span class="line">                words_set.add(word)</span><br><span class="line">    <span class="keyword">return</span> words_set                                             <span class="comment">#返回处理结果</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:根据feature_words将文本向量化</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    train_data_list - 训练集</span></span><br><span class="line"><span class="string">    test_data_list - 测试集</span></span><br><span class="line"><span class="string">    feature_words - 特征集</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    train_feature_list - 训练集向量化列表</span></span><br><span class="line"><span class="string">    test_feature_list - 测试集向量化列表</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">TextFeatures</span><span class="params">(train_data_list, test_data_list, feature_words)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">text_features</span><span class="params">(text, feature_words)</span>:</span>                        <span class="comment">#出现在特征集中，则置1</span></span><br><span class="line">        text_words = set(text)</span><br><span class="line">        features = [<span class="number">1</span> <span class="keyword">if</span> word <span class="keyword">in</span> text_words <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">for</span> word <span class="keyword">in</span> feature_words]</span><br><span class="line">        <span class="keyword">return</span> features</span><br><span class="line">    train_feature_list = [text_features(text, feature_words) <span class="keyword">for</span> text <span class="keyword">in</span> train_data_list]</span><br><span class="line">    test_feature_list = [text_features(text, feature_words) <span class="keyword">for</span> text <span class="keyword">in</span> test_data_list]</span><br><span class="line">    <span class="keyword">return</span> train_feature_list, test_feature_list                <span class="comment">#返回结果</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:文本特征选取</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    all_words_list - 训练集所有文本列表</span></span><br><span class="line"><span class="string">    deleteN - 删除词频最高的deleteN个词</span></span><br><span class="line"><span class="string">    stopwords_set - 指定的结束语</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    feature_words - 特征集</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">words_dict</span><span class="params">(all_words_list, deleteN, stopwords_set = set<span class="params">()</span>)</span>:</span></span><br><span class="line">    feature_words = []                            <span class="comment">#特征列表</span></span><br><span class="line">    n = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> range(deleteN, len(all_words_list), <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> n &gt; <span class="number">1000</span>:                            <span class="comment">#feature_words的维度为1000</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="comment">#如果这个词不是数字，并且不是指定的结束语，并且单词长度大于1小于5，那么这个词就可以作为特征词</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> all_words_list[t].isdigit() <span class="keyword">and</span> all_words_list[t] <span class="keyword">not</span> <span class="keyword">in</span> stopwords_set <span class="keyword">and</span> <span class="number">1</span> &lt; len(all_words_list[t]) &lt; <span class="number">5</span>:</span><br><span class="line">            feature_words.append(all_words_list[t])</span><br><span class="line">        n += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> feature_words</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">函数说明:新闻分类器</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Parameters:</span></span><br><span class="line"><span class="string">    train_feature_list - 训练集向量化的特征文本</span></span><br><span class="line"><span class="string">    test_feature_list - 测试集向量化的特征文本</span></span><br><span class="line"><span class="string">    train_class_list - 训练集分类标签</span></span><br><span class="line"><span class="string">    test_class_list - 测试集分类标签</span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">    test_accuracy - 分类器精度</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">TextClassifier</span><span class="params">(train_feature_list, test_feature_list, train_class_list, test_class_list)</span>:</span></span><br><span class="line">    classifier = MultinomialNB().fit(train_feature_list, train_class_list)</span><br><span class="line">    test_accuracy = classifier.score(test_feature_list, test_class_list)</span><br><span class="line">    <span class="keyword">return</span> test_accuracy</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment">#文本预处理</span></span><br><span class="line">    folder_path = <span class="string">'./SogouC/Sample'</span>                <span class="comment">#训练集存放地址</span></span><br><span class="line">    all_words_list, train_data_list, test_data_list, train_class_list, test_class_list = TextProcessing(folder_path, test_size=<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成stopwords_set</span></span><br><span class="line">    stopwords_file = <span class="string">'./stopwords_cn.txt'</span></span><br><span class="line">    stopwords_set = MakeWordsSet(stopwords_file)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    test_accuracy_list = []</span><br><span class="line">    deleteNs = range(<span class="number">0</span>, <span class="number">1000</span>, <span class="number">20</span>)                <span class="comment">#0 20 40 60 ... 980</span></span><br><span class="line">    <span class="keyword">for</span> deleteN <span class="keyword">in</span> deleteNs:</span><br><span class="line">        feature_words = words_dict(all_words_list, deleteN, stopwords_set)</span><br><span class="line">        train_feature_list, test_feature_list = TextFeatures(train_data_list, test_data_list, feature_words)</span><br><span class="line">        test_accuracy = TextClassifier(train_feature_list, test_feature_list, train_class_list, test_class_list)</span><br><span class="line">        test_accuracy_list.append(test_accuracy)</span><br><span class="line"></span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.plot(deleteNs, test_accuracy_list)</span><br><span class="line">    plt.title(<span class="string">'Relationship of deleteNs and test_accuracy'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'deleteNs'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'test_accuracy'</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>运行结果如下：</p>
+<p><img src="img/45.png" alt=""></p>
+<p>我们绘制出了deleteNs和test_accuracy的关系，这样我们就可以大致确定去掉前多少的高频词汇了。每次运行程序，绘制的图形可能不尽相同，我们可以通过多次测试，来决定这个deleteN的取值，然后确定这个参数，这样就可以顺利构建出用于新闻分类的朴素贝叶斯分类器了。我测试感觉450还不错，最差的分类准确率也可以达到百分之50以上。将if <strong>name</strong> == ‘<strong>main</strong>‘下的代码修改如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment">#文本预处理</span></span><br><span class="line">    folder_path = <span class="string">'./SogouC/Sample'</span>                <span class="comment">#训练集存放地址</span></span><br><span class="line">    all_words_list, train_data_list, test_data_list, train_class_list, test_class_list = TextProcessing(folder_path, test_size=<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成stopwords_set</span></span><br><span class="line">    stopwords_file = <span class="string">'./stopwords_cn.txt'</span></span><br><span class="line">    stopwords_set = MakeWordsSet(stopwords_file)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    test_accuracy_list = []</span><br><span class="line">    feature_words = words_dict(all_words_list, <span class="number">450</span>, stopwords_set)</span><br><span class="line">    train_feature_list, test_feature_list = TextFeatures(train_data_list, test_data_list, feature_words)</span><br><span class="line">    test_accuracy = TextClassifier(train_feature_list, test_feature_list, train_class_list, test_class_list)</span><br><span class="line">    test_accuracy_list.append(test_accuracy)</span><br><span class="line">    ave = <span class="keyword">lambda</span> c: sum(c) / len(c)</span><br><span class="line"></span><br><span class="line">    print(ave(test_accuracy_list))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="img/46.png" alt=""></p>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p><strong>朴素贝叶斯推断的一些优点：</strong></p>
+<ul>
+<li>生成式模型，通过计算概率来进行分类，可以用来处理多分类问题。</li>
+<li>对小规模的数据表现很好，适合多分类任务，适合增量式训练，算法也比较简单。</li>
+</ul>
+<p><strong>朴素贝叶斯推断的一些缺点：</strong></p>
+<ul>
+<li>对输入数据的表达形式很敏感。</li>
+<li>由于朴素贝叶斯的“朴素”特点，所以会带来一些准确率上的损失。<br>需要计算先验概率，分类决策存在错误率。</li>
+</ul>
+<p><strong>其他</strong></p>
+<ul>
+<li>在训练朴素贝叶斯分类器之前，要处理好训练集，文本的清洗还是有很多需要学习的东西。</li>
+<li>根据提取的分类特征将文本向量化，然后训练朴素贝叶斯分类器。</li>
+<li>本文实例中去高频词汇数量的不同，对结果也是有影响的的。</li>
+<li>拉普拉斯平滑对于改善朴素贝叶斯分类器的分类效果有着积极的作用。</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>本文中提到的使用贝叶斯过滤垃圾邮件，来自于《机器学习实战》的第四章朴素贝叶斯。 </li>
+<li>本文的理论部分，参考《机器学习实战》的第三章朴素贝叶斯。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="莫晨 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="莫晨 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/25/python/" rel="next" title="python">
+                <i class="fa fa-chevron-left"></i> python
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">莫晨</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yaoguangju" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yao_guangju@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、前言"><span class="nav-number">1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、朴素贝叶斯理论"><span class="nav-number">2.</span> <span class="nav-text">二、朴素贝叶斯理论</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、贝叶斯决策理论"><span class="nav-number">2.0.1.</span> <span class="nav-text">1、贝叶斯决策理论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、条件概率"><span class="nav-number">2.0.2.</span> <span class="nav-text">2、条件概率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、全概率公式"><span class="nav-number">2.0.3.</span> <span class="nav-text">3、全概率公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、贝叶斯推断"><span class="nav-number">2.0.4.</span> <span class="nav-text">4、贝叶斯推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、朴素贝叶斯推断"><span class="nav-number">2.0.5.</span> <span class="nav-text">5、朴素贝叶斯推断</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#三、实战项目：简单言论过滤器"><span class="nav-number">3.</span> <span class="nav-text">三、实战项目：简单言论过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、朴素贝叶斯之过滤垃圾邮件"><span class="nav-number">4.</span> <span class="nav-text">四、朴素贝叶斯之过滤垃圾邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、收集数据"><span class="nav-number">4.0.1.</span> <span class="nav-text">1、收集数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、准备数据"><span class="nav-number">4.0.2.</span> <span class="nav-text">2、准备数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、朴素贝叶斯之新浪新闻分类-Sklearn"><span class="nav-number">5.</span> <span class="nav-text">五、朴素贝叶斯之新浪新闻分类(Sklearn)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、中文语句切分"><span class="nav-number">5.0.1.</span> <span class="nav-text">1、中文语句切分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、文本特征选择"><span class="nav-number">5.0.2.</span> <span class="nav-text">2、文本特征选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、使用Sklearn构建朴素贝叶斯分类器"><span class="nav-number">5.0.3.</span> <span class="nav-text">3、使用Sklearn构建朴素贝叶斯分类器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、总结"><span class="nav-number">6.</span> <span class="nav-text">六、总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">莫晨</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">12.7k</span>
+  
+</div>
+
+<!-- #隐藏底部强力驱动
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'ntbRXAXWpvIW44GcHqFsuIrL-gzGzoHsz',
+        appKey: 'yX2tqvpQ8lPSDEYHudnC8JaX',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("ntbRXAXWpvIW44GcHqFsuIrL-gzGzoHsz", "yX2tqvpQ8lPSDEYHudnC8JaX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
