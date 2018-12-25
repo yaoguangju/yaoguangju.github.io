@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="##一、前言朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用P">
+<meta name="description" content="前言 朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用Pyth">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习 朴素贝叶斯算法实战(理论+详细的python3代码实现)">
 <meta property="og:url" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/index.html">
 <meta property="og:site_name" content="Mochen">
-<meta property="og:description" content="##一、前言朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用P">
+<meta property="og:description" content="前言 朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用Pyth">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/2.png">
@@ -132,10 +132,10 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/44.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/45.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/46.png">
-<meta property="og:updated_time" content="2018-12-25T16:23:16.000Z">
+<meta property="og:updated_time" content="2018-12-25T16:27:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习 朴素贝叶斯算法实战(理论+详细的python3代码实现)">
-<meta name="twitter:description" content="##一、前言朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用P">
+<meta name="twitter:description" content="前言 朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。 本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用Pyth">
 <meta name="twitter:image" content="http://yoursite.com/2018/12/26/机器学习-朴素贝叶斯算法实战-理论-详细的python3代码实现/img/1.png">
 
 
@@ -461,10 +461,12 @@
       
 
       
-        <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="##一、前言"></a>##一、前言</h2><p>朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>朴素贝叶斯算法是有监督的学习算法，解决的是分类问题，如客户是否流失、是否值得投资、信用等级评定等多分类问题。该算法的优点在于简单易懂、学习效率高、在某些领域的分类问题中能够与决策树、神经网络相媲美。但由于该算法以自变量之间的独立（条件特征独立）性和连续变量的正态性假设为前提，就会导致算法精度在某种程度上受影响。</p>
 <p>本篇文章将从朴素贝叶斯推断原理开始讲起，通过实例进行辅助讲解。最后，使用Python3编程实现一个简单的言论过滤器，新浪微博分类，垃圾邮件分类等等</p>
 <p>本文出现的所有代码，均可在我的github上下载，欢迎Follow、Star：<a href="https://github.com/yaoguangju/machine_learning" target="_blank" rel="noopener">Github地址</a></p>
-<h2 id="二、朴素贝叶斯理论"><a href="#二、朴素贝叶斯理论" class="headerlink" title="##二、朴素贝叶斯理论"></a>##二、朴素贝叶斯理论</h2><p>朴素贝叶斯是贝叶斯决策理论的一部分，所以在讲述朴素贝叶斯之前有必要快速了解一下贝叶斯决策理论。</p>
+<h2 id="朴素贝叶斯理论"><a href="#朴素贝叶斯理论" class="headerlink" title="朴素贝叶斯理论"></a>朴素贝叶斯理论</h2><hr>
+<p>朴素贝叶斯是贝叶斯决策理论的一部分，所以在讲述朴素贝叶斯之前有必要快速了解一下贝叶斯决策理论。</p>
 <h4 id="贝叶斯决策理论"><a href="#贝叶斯决策理论" class="headerlink" title="贝叶斯决策理论"></a>贝叶斯决策理论</h4><p>假设现在我们有一个数据集，它由两类数据组成，数据分布如下图所示：</p>
 <p><img src="img/1.png" alt=""></p>
 <p>我们现在用p1(x,y)表示数据点(x,y)属于类别1(图中红色圆点表示的类别)的概率，用p2(x,y)表示数据点(x,y)属于类别2(图中蓝色三角形表示的类别)的概率，那么对于一个新数据点(x,y)，可以用下面的规则来判断它的类别：</p>
@@ -876,7 +878,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、前言"><span class="nav-number">1.</span> <span class="nav-text">##一、前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、朴素贝叶斯理论"><span class="nav-number">2.</span> <span class="nav-text">##二、朴素贝叶斯理论</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#贝叶斯决策理论"><span class="nav-number">2.0.1.</span> <span class="nav-text">贝叶斯决策理论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件概率"><span class="nav-number">2.0.2.</span> <span class="nav-text">条件概率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全概率公式"><span class="nav-number">2.0.3.</span> <span class="nav-text">全概率公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#贝叶斯推断"><span class="nav-number">2.0.4.</span> <span class="nav-text">贝叶斯推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#朴素贝叶斯推断"><span class="nav-number">2.0.5.</span> <span class="nav-text">朴素贝叶斯推断</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#实战项目：简单言论过滤器"><span class="nav-number">3.</span> <span class="nav-text">实战项目：简单言论过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯之过滤垃圾邮件"><span class="nav-number">4.</span> <span class="nav-text">朴素贝叶斯之过滤垃圾邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#收集数据"><span class="nav-number">4.0.1.</span> <span class="nav-text">收集数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备数据"><span class="nav-number">4.0.2.</span> <span class="nav-text">准备数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯之新浪新闻分类-Sklearn"><span class="nav-number">5.</span> <span class="nav-text">朴素贝叶斯之新浪新闻分类(Sklearn)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#中文语句切分"><span class="nav-number">5.0.1.</span> <span class="nav-text">中文语句切分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文本特征选择"><span class="nav-number">5.0.2.</span> <span class="nav-text">文本特征选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Sklearn构建朴素贝叶斯分类器"><span class="nav-number">5.0.3.</span> <span class="nav-text">使用Sklearn构建朴素贝叶斯分类器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯理论"><span class="nav-number">2.</span> <span class="nav-text">朴素贝叶斯理论</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#贝叶斯决策理论"><span class="nav-number">2.0.1.</span> <span class="nav-text">贝叶斯决策理论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件概率"><span class="nav-number">2.0.2.</span> <span class="nav-text">条件概率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全概率公式"><span class="nav-number">2.0.3.</span> <span class="nav-text">全概率公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#贝叶斯推断"><span class="nav-number">2.0.4.</span> <span class="nav-text">贝叶斯推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#朴素贝叶斯推断"><span class="nav-number">2.0.5.</span> <span class="nav-text">朴素贝叶斯推断</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#实战项目：简单言论过滤器"><span class="nav-number">3.</span> <span class="nav-text">实战项目：简单言论过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯之过滤垃圾邮件"><span class="nav-number">4.</span> <span class="nav-text">朴素贝叶斯之过滤垃圾邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#收集数据"><span class="nav-number">4.0.1.</span> <span class="nav-text">收集数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备数据"><span class="nav-number">4.0.2.</span> <span class="nav-text">准备数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯之新浪新闻分类-Sklearn"><span class="nav-number">5.</span> <span class="nav-text">朴素贝叶斯之新浪新闻分类(Sklearn)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#中文语句切分"><span class="nav-number">5.0.1.</span> <span class="nav-text">中文语句切分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文本特征选择"><span class="nav-number">5.0.2.</span> <span class="nav-text">文本特征选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Sklearn构建朴素贝叶斯分类器"><span class="nav-number">5.0.3.</span> <span class="nav-text">使用Sklearn构建朴素贝叶斯分类器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></div>
             
 
           </div>
